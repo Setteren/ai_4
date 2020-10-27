@@ -76,7 +76,85 @@ public class Driver {
 			driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
 			driver.classNumb = 1;
 		}
+		CSPSolver solverForwardChecking = new CSPAlgorithms();
+		CSPSolver solverForwardCheckingMRVLRVDH = new CSPAlgorithms();
+		CSPSolver solverAC3 = new CSPAlgorithms();
+		CSPSolver solverAC3MRVLRVDH = new CSPAlgorithms();
+		CSPSolver solverBacktracking = new CSPAlgorithms();
+		CSPSolver solverBacktrackingMRVLCVDH = new CSPAlgorithms();
+		CSP<Integer> cspb = population.createCSP();
+		//CSP<Integer> cspb = sudoku.createCSP();
+		CSP<Integer> cspbmrv = population.createCSP();
+		//CSP<Integer> cspbmrv = sudoku.createCSP();
+		CSP<Integer> csp = population.createCSP();
+		//CSP<Integer> csp = sudoku.createCSP();
+		CSP<Integer> cspmrv = population.createCSP();
+		//CSP<Integer> cspmrv = sudoku.createCSP();
+		CSP<Integer> cspac3 = population.createCSP();
+		//CSP<Integer> cspac3 = sudoku.createCSP();
+		CSP<Integer> cspac3mrv = population.createCSP();
+		//CSP<Integer> cspac3mrv = sudoku.createCSP();
+		CSP<Integer> cspmin = population.createCSP();
+		//CSP<Integer> cspmin = sudoku.createCSP();
+		CSPResult<Integer> resultForwardChecking = solverForwardChecking.solve(csp,0);
+		CSPResult<Integer> resultForwardCheckingMRVLRVDH = solverForwardCheckingMRVLRVDH.solve(cspmrv,1);
+		CSPResult<Integer> resultAC3 = solverAC3.solve(cspac3,2);
+		CSPResult<Integer> resultAC3MRVLRVDH  = solverAC3MRVLRVDH.solve(cspac3mrv,3);
+		CSPResult<Integer> resultBacktracking  = solverBacktracking.solve(cspb,4);
+		CSPResult<Integer> resultBacktrackingMRVLCVDH  = solverBacktracking.solve(cspbmrv,5);
+
+		CSPSolver solverMinConflicts = new MinConflicts();
+		CSPResult<Integer> resultMinConflicts = solverMinConflicts.solve(cspmin,2);
+
+		System.out.println("Backtracking:");
+		if(resultBacktracking.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultBacktracking.toString()+"\n");
+
+		}
+		System.out.println("Backtracking using Forward Checking:");
+		if(resultForwardChecking.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultForwardChecking.toString()+"\n");
+		}
+		System.out.println("Backtracking using AC3:");
+		if(resultAC3.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultAC3.toString()+"\n");
+		}
+		System.out.println("Backtracking using Min Remaining Value, Least Remaining Value and One Degree Heuristic::");
+		if(resultBacktrackingMRVLCVDH.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultBacktrackingMRVLCVDH.toString()+"\n");
+
+		}
+		System.out.println("Backtracking using Forward Checking with Min Remaining Value, Least Remaining Value and One Degree Heuristic:");
+		if(resultForwardCheckingMRVLRVDH.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultForwardCheckingMRVLRVDH.toString()+"\n");
+		}
+		System.out.println("Backtracking using AC3 with Min Remaining Value, Least Remaining Value and One Degree Heuristic:");
+		if(resultAC3MRVLRVDH.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultAC3MRVLRVDH.toString()+"\n");
+
+		}
+		System.out.println("Local Search using Min Conflicts:");
+		if(resultMinConflicts.assignment == null) {
+			System.out.println("Found no solution!\n");
+		} else {
+			System.out.println(resultMinConflicts.toString()+"\n");
+
+		}
+		System.out.println("FINAL");
 	}
+
 
 	public static void printFrame(){
 		System.out.print("  Розклад #  |                                            ");
